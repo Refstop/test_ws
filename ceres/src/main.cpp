@@ -1,13 +1,26 @@
 #include "ceres_example/ceres_example.h"
 
+// ceres::SizedCostFunction<1, 1> : residual 개수, 첫번째 파라미터 개수?
 class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
     public:
     virtual ~QuadraticCostFunction() {}
     virtual bool Evaluate(double const* const* parameters, double* residuals, double** jacobians) const {
         const double x = parameters[0][0];
+        // f(x) = 10 - x.
         residuals[0] = 10 - x;
 
-        // Compute the Jacobian if asked for.
+        // f'(x) = -1. Since there's only 1 parameter and that parameter
+        // has 1 dimension, there is only 1 element to fill in the
+        // jacobians.
+        //
+        // Since the Evaluate function can be called with the jacobians
+        // pointer equal to nullptr, the Evaluate function must check to see
+        // if jacobians need to be computed.
+        //
+        // For this simple problem it is overkill to check if jacobians[0]
+        // is nullptr, but in general when writing more complex
+        // CostFunctions, it is possible that Ceres may only demand the
+        // derivatives w.r.t. a subset of the parameter blocks.
         if (jacobians != nullptr && jacobians[0] != nullptr) {
             jacobians[0][0] = -1;
         }
