@@ -1,3 +1,0 @@
-/root/test_ws/ceres/build/CMakeFiles/test_ws.dir
-/root/test_ws/ceres/build/CMakeFiles/edit_cache.dir
-/root/test_ws/ceres/build/CMakeFiles/rebuild_cache.dir
